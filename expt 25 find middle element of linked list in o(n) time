@@ -1,0 +1,88 @@
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() {
+        head = nullptr;
+    }
+
+    void insert(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node* current = head;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+    }
+
+    void display() {
+        if (head == nullptr) {
+            std::cout << "The list is empty." << std::endl;
+            return;
+        }
+
+        Node* current = head;
+        std::cout << "Linked List: ";
+        while (current != nullptr) {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+
+    Node* findMiddleNode() {
+        if (head == nullptr)
+            return nullptr;
+
+        Node* slow = head;
+        Node* fast = head;
+
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+};
+
+int main() {
+    LinkedList list;
+
+    list.insert(10);
+    list.insert(20);
+    list.insert(30);
+    list.insert(40);
+    list.insert(50);
+
+    list.display();
+
+    Node* middleNode = list.findMiddleNode();
+
+    if (middleNode != nullptr) {
+        std::cout << "Middle Element: " << middleNode->data << std::endl;
+    } else {
+        std::cout << "The list is empty." << std::endl;
+    }
+
+    return 0;
+}
